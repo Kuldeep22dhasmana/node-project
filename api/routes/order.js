@@ -11,8 +11,14 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
+   const order = {
+     teacherID: req.body.teacherID,
+     quantity: req.body.quantity
+
+   };
     res.status(201).json  ({
-        message: 'ORDER WAS CREATED'
+        message: 'ORDER WAS CREATED',
+        order: order,
         
     });
   });
