@@ -2,15 +2,18 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-const productRoutes = require('./api/routes/product')
+const productRoutes = require('./api/routes/products')
 const orderRoutes = require('./api/routes/order')
+
+mongoose.connect('mongodb+srv://node_project:'+ process.env.MONGO_ATLAS_PW +'@cluster0.6tknt.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true } );
 
 app.use(morgan('dev')); 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 //ROUTES WHICH SHOULD HANDLE REQUEST
-app.use('/product', productRoutes);
+app.use('/products', productRoutes);
 app.use('/order', orderRoutes);
 
 
