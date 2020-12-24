@@ -1,13 +1,14 @@
  const express = require('express');
     const router = express.Router();
     const mongoose = require('mongoose');
-  const Product =  require('./models/product');
+  const Product =  require('../models/product');
 
 router.get('/', (req, res, next) => {
     Product.find()
     .exec()
     .then(doc => {
         console.log(doc);
+        
         res.status(200).json(doc);
     })
     .catch(err => {
@@ -28,23 +29,29 @@ router.post('/', (req, res, next) => {
       .save()
       .then(result => {
           console.log(result);
-      })
-      .catch(err => console.log(err));
-
+          
       res.status(201).json  ({
-          message: 'HANDLING POST REQUEST TO /products',
-        createdProduct: product
-  
+        message: 'HANDLING POST REQUEST TO /products',
+      createdProduct: result
+
+    });
+      })
+      .catch(err =>   {
+          console.log(err)
+          res.status(500).json({
+              error: err 
+          
+        });
+ 
       });
-  
-  });
+    });
 
 router.get('/:productID', ( req, res, next) => {
     const id = req.params.productID;
     Product.findById(id)
     .exec()
     .then(doc => {
-        console.log(doc);
+        console.log("FROM DATABASE",doc);
         res.status(200).json(doc);
     })
     .catch(err => {
@@ -52,7 +59,6 @@ router.get('/:productID', ( req, res, next) => {
          res.status(500).json({error: err});
     });
 });
-
  router.patch('/:productID', (req, res, next) => {
       res.status(200).json ({
            message: 'UPDATED PRODUCT'
@@ -74,4 +80,5 @@ router.get('/:productID', ( req, res, next) => {
          res.status(500).json({error: err});
     });
 });
- module.exports = router;
+
+module.exports = router;

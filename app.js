@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 
 const productRoutes = require('./api/routes/products')
 const orderRoutes = require('./api/routes/order')
+const teacherRoutes = require('./api/routes/teachers')
+const attendanceRoutes = require('./api/routes/attendances')
+
 
 mongoose.connect('mongodb+srv://node_project:'+ process.env.MONGO_ATLAS_PW +'@cluster0.6tknt.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true } );
 
@@ -15,6 +18,8 @@ app.use(bodyParser.json());
 //ROUTES WHICH SHOULD HANDLE REQUEST
 app.use('/products', productRoutes);
 app.use('/order', orderRoutes);
+app.use('/teacher', teacherRoutes);
+app.use('/attendance', attendanceRoutes);
 
 
 app.use((req, res, next) => {
