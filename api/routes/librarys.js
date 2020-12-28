@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Teacher =  require('../models/teacher');
+const Library =  require('../models/library');
 
 router.get('/', (req, res, next) => {
-Teacher.find()
+Library.find()
 .exec()
 .then(doc => {
-    console.log(doc);
-    
+    console.log(doc); 
     res.status(200).json(doc);
 })
 .catch(err => {
@@ -20,22 +19,24 @@ Teacher.find()
 
 router.post('/', (req, res, next) => {
 
-const teacher = new Teacher({
+const library = new Library({
      _id: new mongoose.Types.ObjectId(),
-     name: req.body.name,
-     username: req.body.username,
-     password: req.body.password,
-     email: req.body.email,
-     contact: req.body.contact
+     
+    bookname: req.body.bookname,
+    bookid: req.body.bookid,
+    dateofissuse: req.body.dateofissue,
+    dateofsubmission: req.body.dateofsubmission,
+    numberofbook: req.body.numberofbook
+
  });
-  teacher
+  library
   .save()
   .then(result => {
       console.log(result);
       
   res.status(201).json  ({
-    message: 'HANDLING POST REQUEST TO /teachers',
-  createdTeacher: result
+    message: 'HANDLING POST REQUEST TO /librarys',
+  createdLibrary: result
 
 });
   })
@@ -45,13 +46,12 @@ const teacher = new Teacher({
           error: err 
       
     });
-
   });
 });
 
-router.get('/:teacherID', ( req, res, next) => {
-const id = req.params.teacherID;
-Teacher.findById(id)
+router.get('/:libraryID', ( req, res, next) => {
+const id = req.params.libraryID;
+Library.findById(id)
 .exec()
 .then(doc => {
     console.log("FROM DATABASE",doc);
@@ -63,9 +63,9 @@ Teacher.findById(id)
 });
 });
 
-router.delete('/:teacherID', (req, res, next) => {
-const id = req.params.teacherID;
-Teacher.findById(id)
+router.delete('/:LibraryID', (req, res, next) => {
+const id = req.params.libraryID;
+Library.findById(id)
 .exec()
 .then(doc => {
     console.log(doc);

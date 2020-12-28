@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Teacher =  require('../models/teacher');
+const Generalsetting = require('../models/generalsetting');
 
 router.get('/', (req, res, next) => {
-Teacher.find()
+Generalsetting.find()
 .exec()
 .then(doc => {
-    console.log(doc);
-    
+    console.log(doc); 
     res.status(200).json(doc);
 })
 .catch(err => {
@@ -20,22 +19,25 @@ Teacher.find()
 
 router.post('/', (req, res, next) => {
 
-const teacher = new Teacher({
+const generalsetting = new Generalsetting({
      _id: new mongoose.Types.ObjectId(),
-     name: req.body.name,
-     username: req.body.username,
-     password: req.body.password,
+     platformname: req.body.platformname,
+     platformlogo: req.body.platformlogo,
+     contact: req.body.contact,
      email: req.body.email,
-     contact: req.body.contact
+     about: req.body.about,
+     primarycolor: req.body.primarycolor,
+     secondarycolor: req.body.secondarycolor
+    
  });
-  teacher
+  generalsetting
   .save()
   .then(result => {
       console.log(result);
       
   res.status(201).json  ({
-    message: 'HANDLING POST REQUEST TO /teachers',
-  createdTeacher: result
+    message: 'HANDLING POST REQUEST TO /generalsettings',
+  createdGeneralsetting: result
 
 });
   })
@@ -49,9 +51,9 @@ const teacher = new Teacher({
   });
 });
 
-router.get('/:teacherID', ( req, res, next) => {
-const id = req.params.teacherID;
-Teacher.findById(id)
+router.get('/:generalsettingID', ( req, res, next) => {
+const id = req.params.generalsettingID;
+Generalsetting.findById(id)
 .exec()
 .then(doc => {
     console.log("FROM DATABASE",doc);
@@ -63,9 +65,9 @@ Teacher.findById(id)
 });
 });
 
-router.delete('/:teacherID', (req, res, next) => {
-const id = req.params.teacherID;
-Teacher.findById(id)
+router.delete('/:generalsettingID', (req, res, next) => {
+const id = req.params.generalsettingID;
+Generalsetting.findById(id)
 .exec()
 .then(doc => {
     console.log(doc);
