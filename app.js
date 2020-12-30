@@ -18,6 +18,8 @@ const feeRoutes = require('./api/routes/fees')
 const generalsettingRoutes = require('./api/routes/generalsettings')
 const studentRoutes = require('./api/routes/students')
 const timetableRoutes = require('./api/routes/timetables')
+const userRoutes = require('./api/routes/user')
+
 
 
 mongoose.connect('mongodb+srv://node_project:'+ process.env.MONGO_ATLAS_PW +'@cluster0.6tknt.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true } );
@@ -40,6 +42,7 @@ app.use('/fee', feeRoutes);
 app.use('/generalsetting', generalsettingRoutes);
 app.use('/student', studentRoutes);
 app.use('/timetable', timetableRoutes);
+app.use('/user', userRoutes);
 
 
 app.use((req, res, next) => {
