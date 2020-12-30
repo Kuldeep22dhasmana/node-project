@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Fee =  require('../models/fee');
+const Unit =  require('../models/unit');
 
 router.get('/', (req, res, next) => {
-Fee.find()
+Unit.find()
 .exec()
 .then(doc => {
     console.log(doc); 
@@ -18,29 +18,22 @@ Fee.find()
 });
 
 router.post('/', (req, res, next) => {
-
-const fee = new Fee({
+ const unit = new Unit({
      _id: new mongoose.Types.ObjectId(),
      
-    studentid: req.body.studentid,
-    parentid: req.body.parentid,
-    date: req.body.date,
-    amount: req.body.amount,
-    status: req.body.status,
-    time: req.body.time
-    
+     unitname: req.body.unitname,
+     chapterid: req.body.chapterid
  });
-  fee
-  .save()
-  .then(result => {
+     unit
+     .save()
+     .then(result => {
       console.log(result);
       
-  res.status(201).json  ({
-    message: 'HANDLING POST REQUEST TO /fees',
-  createdFee: result
-
-});
-  })
+  res.status(201).json ({
+     message: 'HANDLING POST REQUEST TO /units',
+     createdUnit: result
+    });
+})
   .catch(err =>   {
       console.log(err)
       res.status(500).json({
@@ -51,9 +44,9 @@ const fee = new Fee({
   });
 });
 
-router.get('/:feeID', ( req, res, next) => {
-const id = req.params.feeID;
-Fee.findById(id)
+router.get('/:unitID', ( req, res, next) => {
+const id = req.params.unitID;
+Unit.findById(id)
 .exec()
 .then(doc => {
     console.log("FROM DATABASE",doc);
@@ -65,10 +58,10 @@ Fee.findById(id)
 });
 });
 
-router.delete('/:feeID', (req, res, next) => {
-const id = req.params.feeID;
-Fee.findById(id)
-.exec()
+router.delete('/:unitID', (req, res, next) => {
+const id = req.params.chapterID;
+Unit.findById(id)
+.exec() 
 .then(doc => {
     console.log(doc);
     c = doc.remove()
@@ -79,5 +72,20 @@ Fee.findById(id)
      res.status(500).json({error: err});
 });
 });
+
+router.put('/:unitID', ( req, res, next) => {
+  const id = req.params.unitID;
+  const unit = Unit.updateOne({_id:id},{ $set : {unitname:req.body.unitname}})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+  
 
 module.exports = router;

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Subject = require('../models/subject');
+const Syllabus = require('../models/syllabus');
 
 router.get('/', (req, res, next) => {
-    Subject.find()
+    Syllabus.find()
   .exec()
   .then(doc => {
        console.log(doc);
@@ -17,21 +17,21 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    const subject = new Subject({
+    const syllabus = new Syllabus({
         _id: new mongoose.Types.ObjectId(),
-        subjectname: req.body.subjectname,
-        subjectcode: req.body.subjectcode,
-        unitid: req.body.unitid
+        subjectid: req.body.subjectid,
+        marks: req.body.marks,
+        time: req.body.time
 
     });
-    subject
+    syllabus
   .save()
   .then(result => {
     console.log(result);
       
   res.status(201).json  ({
-    message: 'HANDLING POST REQUEST TO /subjects',
-  createdSubject: result
+    message: 'HANDLING POST REQUEST TO /syllabuses',
+  createdSyllabus: result
 
 });
   })
@@ -45,9 +45,9 @@ router.post('/', (req, res, next) => {
   });
 });
 
-router.get('/:subjectID', ( req, res, next) => {
-    const id = req.params.subjectID;
-    Subject.findById(id)
+router.get('/:syllabusID', ( req, res, next) => {
+    const id = req.params.syllabusID;
+    Syllabus.findById(id)
     .exec()
     .then(doc => {
         console.log("FROM DATABASE",doc);
@@ -59,9 +59,9 @@ router.get('/:subjectID', ( req, res, next) => {
     });
     });
     
-    router.delete('/:subjectID', (req, res, next) => {
-    const id = req.params.subjectID;
-    Subject.findById(id)
+    router.delete('/:syllabusID', (req, res, next) => {
+    const id = req.params.syllabusID;
+    Syllabus.findById(id)
     .exec()
     .then(doc => {
         console.log(doc);
@@ -74,9 +74,9 @@ router.get('/:subjectID', ( req, res, next) => {
     });
     });
 
-    router.put('/:subjectID', ( req, res, next) => {
-  const id = req.params.subjectID;
-  const subject = Subject.updateOne({_id:id},{ $set : {subjectname:req.body.subjectname}})
+    router.put('/:syllabusID', ( req, res, next) => {
+  const id = req.params.syllabusID;
+  const syllabus = Syllabus.updateOne({_id:id},{ $set : {marks:req.body.marks}})
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);

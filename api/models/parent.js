@@ -2,10 +2,9 @@ const mongoose = require('mongoose');
 
 const parentSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    name: String,
-    username: String,
-    password: Number,
-    contact: Number,
+    parentid: String,
+    studentid: String,
+    contact: String,
     email: String
 });
 module.exports = mongoose.model('Parent',parentSchema);

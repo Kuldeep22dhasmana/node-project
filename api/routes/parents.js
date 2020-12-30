@@ -22,11 +22,10 @@ router.post('/', (req, res, next) => {
 const parent = new Parent({
      _id: new mongoose.Types.ObjectId(),
      
-    name: req.body.name,
-    username: req.body.username,
-    password: req.body.password,
-    contact: req.body.contact,
-    email: req.body.email,   
+     parentid: req.body.parentid,
+     studentid: req.body.studentid,
+     contact: req.body.contact,
+     email: req.body.email
     
  });
   parent
@@ -67,7 +66,7 @@ Parent.findById(id)
 router.delete('/:parentID', (req, res, next) => {
 const id = req.params.parentID;
 Parent.findById(id)
-.exec()
+.exec() 
 .then(doc => {
     console.log(doc);
     c = doc.remove()
@@ -78,5 +77,20 @@ Parent.findById(id)
      res.status(500).json({error: err});
 });
 });
+
+router.put('/:parentID', ( req, res, next) => {
+  const id = req.params.parentID;
+  const parent = Parent.updateOne({_id:id},{ $set : {parentid:req.body.parentid} , $set : {studentid:req.body.studentid} })
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+  
 
 module.exports = router;

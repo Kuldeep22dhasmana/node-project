@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Fee =  require('../models/fee');
+const Chapter =  require('../models/chapter');
 
 router.get('/', (req, res, next) => {
-Fee.find()
+Chapter.find()
 .exec()
 .then(doc => {
     console.log(doc); 
@@ -18,29 +18,23 @@ Fee.find()
 });
 
 router.post('/', (req, res, next) => {
-
-const fee = new Fee({
+ const chapter = new Chapter({
      _id: new mongoose.Types.ObjectId(),
      
-    studentid: req.body.studentid,
-    parentid: req.body.parentid,
-    date: req.body.date,
-    amount: req.body.amount,
-    status: req.body.status,
-    time: req.body.time
-    
+     chaptername: req.body.chaptername,
+     topicid: req.body.topicid,
+     videourl: req.body.videourl
  });
-  fee
-  .save()
-  .then(result => {
+     chapter
+     .save()
+     .then(result => {
       console.log(result);
       
-  res.status(201).json  ({
-    message: 'HANDLING POST REQUEST TO /fees',
-  createdFee: result
-
-});
-  })
+  res.status(201).json ({
+     message: 'HANDLING POST REQUEST TO /chapters',
+     createdChapter: result
+    });
+})
   .catch(err =>   {
       console.log(err)
       res.status(500).json({
@@ -51,9 +45,9 @@ const fee = new Fee({
   });
 });
 
-router.get('/:feeID', ( req, res, next) => {
-const id = req.params.feeID;
-Fee.findById(id)
+router.get('/:chapterID', ( req, res, next) => {
+const id = req.params.chapterID;
+Chapter.findById(id)
 .exec()
 .then(doc => {
     console.log("FROM DATABASE",doc);
@@ -65,10 +59,10 @@ Fee.findById(id)
 });
 });
 
-router.delete('/:feeID', (req, res, next) => {
-const id = req.params.feeID;
-Fee.findById(id)
-.exec()
+router.delete('/:chapterID', (req, res, next) => {
+const id = req.params.chapterID;
+Chapter.findById(id)
+.exec() 
 .then(doc => {
     console.log(doc);
     c = doc.remove()
@@ -79,5 +73,20 @@ Fee.findById(id)
      res.status(500).json({error: err});
 });
 });
+
+router.put('/:chapterID', ( req, res, next) => {
+  const id = req.params.chapterID;
+  const chapter = Chapter.updateOne({_id:id},{ $set : {chaptername:req.body.chaptername}})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+  
 
 module.exports = router;

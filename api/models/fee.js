@@ -5,7 +5,10 @@ const feeSchema = mongoose.Schema({
     studentid: String,
     parentid: String,
     amount: Number,
-    date: String
+    date: String,
+    time: String,
+    status: String
+
     
 });
 module.exports = mongoose.model('Fee',feeSchema);

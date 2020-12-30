@@ -9,7 +9,6 @@ const orderRoutes = require('./api/routes/order')
 const teacherRoutes = require('./api/routes/teachers')
 const attendanceRoutes = require('./api/routes/attendances')
 const parentRoutes = require('./api/routes/parents')
-const subjectRoutes = require('./api/routes/subjects')
 const courseRoutes = require('./api/routes/courses')
 const collegeRoutes = require('./api/routes/colleges')
 const libraryRoutes = require('./api/routes/librarys')
@@ -19,6 +18,11 @@ const generalsettingRoutes = require('./api/routes/generalsettings')
 const studentRoutes = require('./api/routes/students')
 const timetableRoutes = require('./api/routes/timetables')
 const userRoutes = require('./api/routes/user')
+const topicRoutes = require('./api/routes/topics')
+const chapterRoutes = require('./api/routes/chapters')
+const unitRoutes = require('./api/routes/units')
+const subjectRoutes = require('./api/routes/subjects')
+const syllabusRoutes = require('./api/routes/syllabuses')
 
 
 
@@ -33,7 +37,6 @@ app.use('/order', orderRoutes);
 app.use('/teacher', teacherRoutes);
 app.use('/attendance', attendanceRoutes);
 app.use('/parent', parentRoutes);
-app.use('/subject', subjectRoutes);
 app.use('/course', courseRoutes);
 app.use('/college', collegeRoutes);
 app.use('/library', libraryRoutes);
@@ -43,6 +46,11 @@ app.use('/generalsetting', generalsettingRoutes);
 app.use('/student', studentRoutes);
 app.use('/timetable', timetableRoutes);
 app.use('/user', userRoutes);
+app.use('/topic', topicRoutes);
+app.use('/chapter', chapterRoutes);
+app.use('/unit', unitRoutes);
+app.use('/subject', subjectRoutes);
+app.use('/syllabus', syllabusRoutes);
 
 
 app.use((req, res, next) => {

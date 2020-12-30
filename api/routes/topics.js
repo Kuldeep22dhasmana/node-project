@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Fee =  require('../models/fee');
+const Topic =  require('../models/topic');
 
 router.get('/', (req, res, next) => {
-Fee.find()
+Topic.find()
 .exec()
 .then(doc => {
     console.log(doc); 
@@ -19,25 +19,20 @@ Fee.find()
 
 router.post('/', (req, res, next) => {
 
-const fee = new Fee({
+const topic = new Topic({
      _id: new mongoose.Types.ObjectId(),
      
-    studentid: req.body.studentid,
-    parentid: req.body.parentid,
-    date: req.body.date,
-    amount: req.body.amount,
-    status: req.body.status,
-    time: req.body.time
-    
+     topicname: req.body.topicname,
+     videourl: req.body.videourl
  });
-  fee
+  topic
   .save()
   .then(result => {
       console.log(result);
       
   res.status(201).json  ({
-    message: 'HANDLING POST REQUEST TO /fees',
-  createdFee: result
+    message: 'HANDLING POST REQUEST TO /topics',
+  createdTopic: result
 
 });
   })
@@ -51,9 +46,9 @@ const fee = new Fee({
   });
 });
 
-router.get('/:feeID', ( req, res, next) => {
-const id = req.params.feeID;
-Fee.findById(id)
+router.get('/:topicID', ( req, res, next) => {
+const id = req.params.topicID;
+Topic.findById(id)
 .exec()
 .then(doc => {
     console.log("FROM DATABASE",doc);
@@ -65,10 +60,10 @@ Fee.findById(id)
 });
 });
 
-router.delete('/:feeID', (req, res, next) => {
-const id = req.params.feeID;
-Fee.findById(id)
-.exec()
+router.delete('/:topicID', (req, res, next) => {
+const id = req.params.topicID;
+Topic.findById(id)
+.exec() 
 .then(doc => {
     console.log(doc);
     c = doc.remove()
@@ -79,5 +74,20 @@ Fee.findById(id)
      res.status(500).json({error: err});
 });
 });
+
+router.put('/:topicID', ( req, res, next) => {
+  const id = req.params.topicID;
+  const topic = Topic.updateOne({_id:id},{ $set : {topicname:req.body.topicname}})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+  
 
 module.exports = router;
