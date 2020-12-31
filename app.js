@@ -23,7 +23,8 @@ const chapterRoutes = require('./api/routes/chapters')
 const unitRoutes = require('./api/routes/units')
 const subjectRoutes = require('./api/routes/subjects')
 const syllabusRoutes = require('./api/routes/syllabuses')
-
+const assignmentRoutes = require('./api/routes/assignments')
+const testRoutes = require('./api/routes/tests')
 
 
 mongoose.connect('mongodb+srv://node_project:'+ process.env.MONGO_ATLAS_PW +'@cluster0.6tknt.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true } );
@@ -51,7 +52,8 @@ app.use('/chapter', chapterRoutes);
 app.use('/unit', unitRoutes);
 app.use('/subject', subjectRoutes);
 app.use('/syllabus', syllabusRoutes);
-
+app.use('/assignment', assignmentRoutes);
+app.use('/test', testRoutes);
 
 app.use((req, res, next) => {
   const error = new Error('NOT FOUND');

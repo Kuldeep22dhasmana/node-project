@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Fee =  require('../models/fee');
+const Assignment =  require('../models/assignment');
 
 router.get('/', (req, res, next) => {
-Fee.find()
+Assignment.find()
 .exec()
 .then(doc => {
-    console.log(doc); 
+    console.log(doc);
+    
     res.status(200).json(doc);
 })
 .catch(err => {
@@ -19,25 +20,20 @@ Fee.find()
 
 router.post('/', (req, res, next) => {
 
-const fee = new Fee({
+const assignment = new Assignment({
      _id: new mongoose.Types.ObjectId(),
-     
-    studentid: req.body.studentid,
-    parentid: req.body.parentid,
-    date: req.body.date,
-    amount: req.body.amount,
-    status: req.body.status,
+     subjectid: req.body.subjectid,
+    teacherid: req.body.teacherid,
     time: req.body.time
-    
  });
-  fee
+  assignment
   .save()
   .then(result => {
       console.log(result);
       
   res.status(201).json  ({
-    message: 'HANDLING POST REQUEST TO /fees',
-  createdFee: result
+    message: 'HANDLING POST REQUEST TO /assignments',
+  createdAssignment: result
 
 });
   })
@@ -51,9 +47,9 @@ const fee = new Fee({
   });
 });
 
-router.get('/:feeID', ( req, res, next) => {
-const id = req.params.feeID;
-Fee.findById(id)
+router.get('/:assignmentID', ( req, res, next) => {
+const id = req.params.assignmentID;
+Assignment.findById(id)
 .exec()
 .then(doc => {
     console.log("FROM DATABASE",doc);
@@ -65,9 +61,9 @@ Fee.findById(id)
 });
 });
 
-router.delete('/:feeID', (req, res, next) => {
-const id = req.params.feeID;
-Fee.findById(id)
+router.delete('/:assignmentID', (req, res, next) => {
+const id = req.params.assignmentID;
+Assignment.findById(id)
 .exec()
 .then(doc => {
     console.log(doc);
@@ -80,19 +76,19 @@ Fee.findById(id)
 });
 });
 
-router.put('/:feeID', ( req, res, next) => {
-  const id = req.params.feeID;
-  const fee = Fee.updateOne({_id:id},{ $set : {status:req.body.status}  })
-  .exec()
-  .then(doc => {
-      console.log("FROM DATABASE",doc);
-      res.status(200).json(doc);
-  })
-  .catch(err => {
-       console.log(err); 
-       res.status(500).json({error: err});
+router.put('/:assignmentID', ( req, res, next) => {
+    const id = req.params.assignmentID;
+    const assignment = Assignment.updateMany({_id:id},{ $set : {teacherid:req.body.teacherid} , })
+    .exec()
+    .then(doc => {
+        console.log("FROM DATABASE",doc);
+        res.status(200).json(doc);
+    })
+    .catch(err => {
+         console.log(err); 
+         res.status(500).json({error: err});
+    });
   });
-});
-
+    
 
 module.exports = router;
