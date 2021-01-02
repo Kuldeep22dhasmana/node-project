@@ -22,7 +22,7 @@ router.post('/', (req, res, next) => {
 const timetable = new Timetable({
      _id: new mongoose.Types.ObjectId(),
      
-    date: req.body.date,
+    time: req.body.date,
     day: req.body.day,
     period1: req.body.period1,
     period2: req.body.period2,

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const timetableSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
         day: String,
-        date: String,
+        time: String,
         period1: String,
         period2: String,
         period3: String,

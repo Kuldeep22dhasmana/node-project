@@ -4,6 +4,7 @@ const testSchema = mongoose.Schema({
     subjectid: String,
     teacherid: String,
     time: String,
+    obtainedmarks: String,
     marks: String
 });
 

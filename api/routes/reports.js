@@ -1,40 +1,40 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Test =  require('../models/test');
+const Report =  require('../models/report');
 
 router.get('/', (req, res, next) => {
-Test.find()
+Report.find()
 .exec()
 .then(doc => {
-    console.log(doc);
-    
+    console.log(doc); 
     res.status(200).json(doc);
 })
 .catch(err => {
      console.log(err); 
      res.status(500).json({error: err});
 });
+
 });
 
 router.post('/', (req, res, next) => {
 
-const test = new Test({
+const report = new Report({
      _id: new mongoose.Types.ObjectId(),
+     studentid: req.body.studentid,
      subjectid: req.body.subjectid,
-     teacherid: req.body.teacherid,
-     time: req.body.time,
-     obtainedmarks: req.body.marks,
-     marks: req.body.marks
+     totalmarks: req.body.totalmarks,
+     testid: req.body.testid
+    
  });
-  test
+  report
   .save()
   .then(result => {
       console.log(result);
       
-  res.status(201).json  ({
-    message: 'HANDLING POST REQUEST TO /tests',
-    createdTest: result
+   res.status(201).json  ({
+   message: 'HANDLING POST REQUEST TO /reports',
+   createdReport: result
 
 });
   })
@@ -48,23 +48,23 @@ const test = new Test({
   });
 });
 
-router.get('/:testID', ( req, res, next) => {
-const id = req.params.testID;
-Test.findById(id)
+router.get('/:reportID', ( req, res, next) => {
+const id = req.params.reportID;
+Report.findById(id)
 .exec()
 .then(doc => {
     console.log("FROM DATABASE",doc);
     res.status(200).json(doc);
-})
-.catch(err => {
+     })
+     .catch(err => {
      console.log(err); 
      res.status(500).json({error: err});
-});
+  });
 });
 
-router.delete('/:testID', (req, res, next) => {
-const id = req.params.testID;
-Test.findById(id)
+router.delete('/:reportID', (req, res, next) => {
+const id = req.params.reportID;
+Report.findById(id)
 .exec()
 .then(doc => {
     console.log(doc);
@@ -77,19 +77,18 @@ Test.findById(id)
 });
 });
 
-router.put('/:testID', ( req, res, next) => {
-    const id = req.params.testtID;
-    const test = Test.updateMany({_id:id},{ $set : {marks:req.body.marks} , })
+router.put('/:reportID', ( req, res, next) => {
+    const id = req.params.reportID;
+    const report = Report.updateOne({_id:id},{ $set : {studentid:req.body.studentid}  })
     .exec()
     .then(doc => {
         console.log("FROM DATABASE",doc);
         res.status(200).json(doc);
     })
     .catch(err => {
-         console.log(err); 
+          console.log(err); 
          res.status(500).json({error: err});
     });
   });
-    
 
 module.exports = router;

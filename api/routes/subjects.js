@@ -48,8 +48,8 @@ router.post('/', (req, res, next) => {
 router.get('/:subjectID', ( req, res, next) => {
     const id = req.params.subjectID;
     Subject.findById(id)
-    .exec()
-    .then(doc => {
+      .exec()
+       .then(doc => {
         console.log("FROM DATABASE",doc);
         res.status(200).json(doc);
     })
