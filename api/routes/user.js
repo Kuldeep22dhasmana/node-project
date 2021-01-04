@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 
 
 const User = require('../models/user');
+const user = require("../models/user");
+const { json } = require("body-parser");
 
 
 router.post("/signup", (req, res, next) => {
@@ -44,6 +46,39 @@ router.post("/signup", (req, res, next) => {
             }
         });
      }
+   });
+});
+
+router.post("/login", (req, res, next) => {
+   User.find({ email: req.body,email })
+    .exec()
+    .then( user => {
+    if (user.length < 1) {
+       return res.status(404).json({
+          message: 'Auth Failed'
+         });
+     }
+    bcrypt.compare(req.body.password, user[0].password, (err, result) => {
+         if (err) {
+            return res.status(401).json({
+               message: 'AUTH FAILED'
+            });
+         }
+         if (result)  {
+            return res.status(200),json({
+               message: 'AUTH SUCCESSFUL'
+            });
+         }
+         res.status(401).json({
+            message: 'AUTH FAILED'
+         });
+      });  
+   }) 
+   .catch(err => {
+      console.log(err);
+      res.status(500).json({
+         error: err
+      });
    });
 });
 
