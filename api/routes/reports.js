@@ -79,7 +79,7 @@ Report.findById(id)
 
 router.put('/:reportID', ( req, res, next) => {
     const id = req.params.reportID;
-    const report = Report.updateOne({_id:id},{ $set : {studentid:req.body.studentid}  })
+    const report = Report.updateOne({_id:id},{ $set : {studentid:req.body.studentid , subjectid: req.body.subjectid , totalmarks: req.body.totalmarks , testid: req.body.testid  }})
     .exec()
     .then(doc => {
         console.log("FROM DATABASE",doc);

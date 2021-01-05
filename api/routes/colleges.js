@@ -77,4 +77,19 @@ College.findById(id)
 });
 });
 
+router.put('/:collegeID', ( req, res, next) => {
+  const id = req.params.collegeID;
+  const college = College.updateOne({_id:id},{ $set : { name: req.body.name , location: req.body.location  }})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+        console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+
+
 module.exports = router;

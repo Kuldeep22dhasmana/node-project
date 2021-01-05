@@ -76,7 +76,7 @@ router.get('/:syllabusID', ( req, res, next) => {
 
     router.put('/:syllabusID', ( req, res, next) => {
   const id = req.params.syllabusID;
-  const syllabus = Syllabus.updateOne({_id:id},{ $set : {marks:req.body.marks}})
+  const syllabus = Syllabus.updateOne({_id:id},{ $set : {marks:req.body.marks , subjectid: req.body.subjectid , time: req.body.time }})
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);

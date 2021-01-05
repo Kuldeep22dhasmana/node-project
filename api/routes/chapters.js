@@ -76,7 +76,7 @@ Chapter.findById(id)
 
 router.put('/:chapterID', ( req, res, next) => {
   const id = req.params.chapterID;
-  const chapter = Chapter.updateOne({_id:id},{ $set : {chaptername:req.body.chaptername}})
+  const chapter = Chapter.updateOne({_id:id},{ $set : {chaptername:req.body.chaptername , topicid: req.body.topicid , videourl: req.body.videourl}})
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);

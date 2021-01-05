@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const  mongoose = require('mongoose');
-const Todayclass = require('../models/todayclass');
+const Banner = require('../models/banner');
 
 router.get('/', (req, res, next) => {
- Todayclass.find()
+ Banner.find()
  .exec()
  .then(doc => {
      console.log(doc).json(doc);
@@ -17,21 +17,19 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    const todayclass = new Todayclass ({
+    const banner = new Banner ({
         _id: new mongoose.Types.ObjectId,
-        classtime: req.body.classtime,
-        classname: req.body.classname,
-        teacherid: req.body.teacherid,
-        subjectid: req.body.subjectid,
-        periodnumber: req.body.periodnumber
+        img1: req.body.img1,
+        img2: req.body.img2
     });
-     todayclass
+     banner
+    
     .save()
     .then(result => {
         console.log(result);
         res.status(201).json ({
-            message: 'HANDLING POST REQUEST TO /todayclasses',
-            createdTodayclass: result
+            message: 'HANDLING POST REQUEST TO /banners',
+            createdBanner: result
         });
     })
     .catch(err => {
@@ -42,9 +40,9 @@ router.post('/', (req, res, next) => {
 });
 
 
-router.get('/:todayclassID', (req, res, next) => {
-    const id = req.params.todayclassID;
-    Todayclass.findById(id)
+router.get('/:bannerID', (req, res, next) => {
+    const id = req.params.bannerID;
+    Banner.findById(id)
     .exec()
     .then(doc => {
         console.log('FROM DATABASE', doc);
@@ -56,9 +54,9 @@ router.get('/:todayclassID', (req, res, next) => {
     });
 });
 
-router.delete('/:todayclassID', (req, res, next) => {
-    const id = req.params.todayclassID;
-    Todayclass.findById(id)
+router.delete('/:bannerID', (req, res, next) => {
+    const id = req.params.bannerID;
+    Banner.findById(id)
     .exec()
     .then(doc => {
          console.log(doc);
@@ -71,9 +69,9 @@ router.delete('/:todayclassID', (req, res, next) => {
     });
 });
 
-router.put('/:todayclassID', ( req, res, next) => {
-    const id = req.params.todayclassID;
-    const todayclass = Todayclass.updateOne({_id:id},{ $set : {classname:req.body.classname , classtime: req.body.classtime}  })
+router.put('/:bannerID', ( req, res, next) => {
+    const id = req.params.bannerID;
+    const banner = Banner.updateOne({_id:id},{ $set : {img1:req.body.img1 , img2:req.body.img2} })
     .exec()
     .then(doc => {
         console.log("FROM DATABASE",doc);

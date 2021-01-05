@@ -4,8 +4,14 @@ const teacherSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
         name : String,
         username: String,
-        password: Number,
+        password: String,
         email: String,
-        contact: Number
+        contact: Number,
+        jobrole: String,
+        salary: String,
+        gender: String,
+        joiningdate: String,
+        role: String
+
 });
 module.exports = mongoose.model('Teacher',teacherSchema);

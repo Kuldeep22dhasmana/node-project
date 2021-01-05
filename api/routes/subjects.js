@@ -76,7 +76,7 @@ router.get('/:subjectID', ( req, res, next) => {
 
     router.put('/:subjectID', ( req, res, next) => {
   const id = req.params.subjectID;
-  const subject = Subject.updateOne({_id:id},{ $set : {subjectname:req.body.subjectname}})
+  const subject = Subject.updateOne({_id:id},{ $set : {subjectname:req.body.subjectname , subjectcode: req.body.subjectcode , unitid: req.body.unitid }})
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);

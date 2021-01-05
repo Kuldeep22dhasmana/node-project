@@ -78,7 +78,7 @@ Assignment.findById(id)
 
 router.put('/:assignmentID', ( req, res, next) => {
     const id = req.params.assignmentID;
-    const assignment = Assignment.updateMany({_id:id},{ $set : {teacherid:req.body.teacherid} , })
+    const assignment = Assignment.updateMany({_id:id},{ $set : { teacherid:req.body.teacheridc , subjectid: req.body.subjectid , time: req.body.time }})
     .exec()
     .then(doc => {
         console.log("FROM DATABASE",doc);

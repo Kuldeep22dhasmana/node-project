@@ -80,7 +80,7 @@ Parent.findById(id)
 
 router.put('/:parentID', ( req, res, next) => {
   const id = req.params.parentID;
-  const parent = Parent.updateOne({_id:id},{ $set : {parentid:req.body.parentid} , $set : {studentid:req.body.studentid} })
+  const parent = Parent.updateOne({_id:id},{ $set : {parentid:req.body.parentid , studentid:req.body.studentid  , contact: req.body.contact , email: req.body.email }})
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);

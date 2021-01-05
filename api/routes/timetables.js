@@ -81,4 +81,18 @@ Timetable.findById(id)
 });
 });
 
+router.put('/:timetableID', ( req, res, next) => {
+  const id = req.params.timetableID;
+  const timetable = Timetable.updateOne({_id:id},{ $set : {time:req.body.time , day: req.body.day , period1:req.body.period1 , period2:req.body.period2 , period3:req.body.period3 , period4:req.body.period4 , period5:req.body.period5 , period6:req.body.period6}})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+
 module.exports = router;

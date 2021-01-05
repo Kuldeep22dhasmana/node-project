@@ -26,7 +26,7 @@ const student = new Student({
     username: req.body.username,
     password: req.body.password,
     contact: req.body.contact,
-    email: req.body.email,   
+    email: req.body.email
     
  });
   student
@@ -77,6 +77,20 @@ Student.findById(id)
      console.log(err); 
      res.status(500).json({error: err});
 });
+});
+
+router.put('/:studentID', ( req, res, next) => {
+  const id = req.params.studentID;
+  const student = Student.updateOne({_id:id},{ $set : {name:req.body.name , username: req.body.username , password: req.body.password , contact: req.body.contact , email: req.body.email }})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
 });
 
 module.exports = router;

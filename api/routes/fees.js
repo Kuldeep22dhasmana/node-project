@@ -82,7 +82,7 @@ Fee.findById(id)
 
 router.put('/:feeID', ( req, res, next) => {
   const id = req.params.feeID;
-  const fee = Fee.updateOne({_id:id},{ $set : {status:req.body.status}  })
+  const fee = Fee.updateOne({_id:id},{ $set : {status:req.body.status , studentid: req.body.studentid , parentid: req.body.parentid , date: req.body.date , amount: req.body.amount , time: req.body.time} })
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);

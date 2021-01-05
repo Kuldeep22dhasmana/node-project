@@ -26,7 +26,12 @@ const teacher = new Teacher({
      username: req.body.username,
      password: req.body.password,
      email: req.body.email,
-     contact: req.body.contact
+     contact: req.body.contact,
+     salary: req.body.salary,
+     jobrole: req.body.jobrole,
+     joiningdate: req.body.joiningdate,
+     gender: req.body.gender,
+     role: req.body.role
  });
   teacher
   .save()
@@ -76,6 +81,21 @@ Teacher.findById(id)
      console.log(err); 
      res.status(500).json({error: err});
 });
+});
+
+
+router.put('/:teacherID', ( req, res, next) => {
+  const id = req.params.teacherID;
+  const teacher = Teacher.updateOne({_id:id},{ $set : {name:req.body.name , email: req.body.email , username: req.body.username , role: req.body.role , salary: req.body.salary , password: req.body.password , contact: req.body.contact , gender: req.body.gender  }})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
 });
 
 module.exports = router;

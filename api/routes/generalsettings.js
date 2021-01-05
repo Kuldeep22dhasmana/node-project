@@ -80,4 +80,19 @@ Generalsetting.findById(id)
 });
 });
 
+router.put('/:generalsettingID', ( req, res, next) => {
+  const id = req.params.generalsettingID;
+  const generalsetting = Generalsetting.updateOne({_id:id},{ $set : {platformname: req.body.platformname , platformlogo: req.body.platformlogo , contact: req.body.contact , email: req.body.email , about: req.body.about , primarycolor: req.body.primarycolor , secondarycolor: req.body.secondarycolor}})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+
+
 module.exports = router;

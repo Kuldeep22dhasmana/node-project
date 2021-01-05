@@ -75,7 +75,7 @@ Unit.findById(id)
 
 router.put('/:unitID', ( req, res, next) => {
   const id = req.params.unitID;
-  const unit = Unit.updateOne({_id:id},{ $set : {unitname:req.body.unitname}})
+  const unit = Unit.updateOne({_id:id},{ $set : {unitname:req.body.unitname , chapterid: req.body.chapterid}})
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);

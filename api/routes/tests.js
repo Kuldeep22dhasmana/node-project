@@ -24,7 +24,7 @@ const test = new Test({
      subjectid: req.body.subjectid,
      teacherid: req.body.teacherid,
      time: req.body.time,
-     obtainedmarks: req.body.marks,
+     obtainedmarks: req.body.obtainedmarks,
      marks: req.body.marks
  });
   test
@@ -79,7 +79,7 @@ Test.findById(id)
 
 router.put('/:testID', ( req, res, next) => {
     const id = req.params.testtID;
-    const test = Test.updateMany({_id:id},{ $set : {marks:req.body.marks} , })
+    const test = Test.updateMany({_id:id},{ $set : {marks:req.body.marks , teacherid: req.body.teacherid ,subjectid: req.body.subjectid , time: req.body.time , obtainedmarks: req.body.obtainedmarks }})
     .exec()
     .then(doc => {
         console.log("FROM DATABASE",doc);

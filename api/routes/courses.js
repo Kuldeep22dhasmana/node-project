@@ -22,11 +22,11 @@ router.post('/', (req, res, next) => {
 const course = new Course({
      _id: new mongoose.Types.ObjectId(),
      
-    name: req.body.name,
-    totalstudent: req.body.totalstudent,
-    duration: req.body.duration,   
+     name: req.body.name,
+     totalstudent: req.body.totalstudent,
+     duration: req.body.duration 
     
- });
+    });
   course
   .save()
   .then(result => {
@@ -76,5 +76,20 @@ Course.findById(id)
      res.status(500).json({error: err});
 });
 });
+
+router.put('/:courseID', ( req, res, next) => {
+  const id = req.params.courseID;
+  const course = Course.updateOne({_id:id},{ $set : {name: req.body.name , totalstudent: req.body.totalstudent , duration: req.body.duration  }})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+        console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+
 
 module.exports = router;

@@ -71,7 +71,7 @@ router.delete('/:performanceID', (req, res, next) => {
 
 router.put('/:performanceID', ( req, res, next) => {
     const id = req.params.performanceID;
-    const performance = Performance.updateOne({_id:id},{ $set : {studentid:req.body.studentid}  })
+    const performance = Performance.updateOne({_id:id},{ $set : {studentid:req.body.studentid , teacherid: req.body.teacherid , subjectid: req.body.subjectid, marks: req.body.marks }})
     .exec()
     .then(doc => {
         console.log("FROM DATABASE",doc);

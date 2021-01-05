@@ -78,4 +78,19 @@ Library.findById(id)
 });
 });
 
+router.put('/:libraryID', ( req, res, next) => {
+  const id = req.params.libraryID;
+  const library = Library.updateOne({_id:id},{ $set : { bookname: req.body.bookname, bookid: req.body.bookid, dateofissuse: req.body.dateofissue, dateofsubmission: req.body.dateofsubmission, numberofbook: req.body.numberofbook }})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+
+
 module.exports = router;

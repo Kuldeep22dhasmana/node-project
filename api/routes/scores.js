@@ -24,7 +24,7 @@ const score = new Score({
      
     studentname: req.body.studentname,
     mark: req.body.mark,
-    subject: req.body.subject,   
+    subject: req.body.subject
     
  });
   score
@@ -76,5 +76,20 @@ Score.findById(id)
      res.status(500).json({error: err});
 });
 });
+
+router.put('/:scoreID', ( req, res, next) => {
+  const id = req.params.scoreID;
+  const score = Score.updateOne({_id:id},{ $set : {studentname:req.body.studentname , subject: req.body.subject , mark: req.body.mark}})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+
 
 module.exports = router;

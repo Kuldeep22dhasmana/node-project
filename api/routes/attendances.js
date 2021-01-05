@@ -79,4 +79,20 @@ Attendance.findById(id)
 });
 });
 
+router.put('/:attendanceID', ( req, res, next) => {
+  const id = req.params.attendanceID;
+  const attendance = Attendance.updateOne({_id:id},{ $set : { day: req.body.day , student: req.body.student , teacher: req.body.teacher }})
+  .exec()
+  .then(doc => {
+      console.log("FROM DATABASE",doc);
+      res.status(200).json(doc);
+  })
+  .catch(err => {
+       console.log(err); 
+       res.status(500).json({error: err});
+  });
+});
+
+
+
 module.exports = router;

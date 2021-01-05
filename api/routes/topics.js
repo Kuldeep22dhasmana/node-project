@@ -77,7 +77,7 @@ Topic.findById(id)
 
 router.put('/:topicID', ( req, res, next) => {
   const id = req.params.topicID;
-  const topic = Topic.updateOne({_id:id},{ $set : {topicname:req.body.topicname}})
+  const topic = Topic.updateOne({_id:id},{ $set : {topicname:req.body.topicname , videourl: req.body.videourl}})
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);

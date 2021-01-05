@@ -28,6 +28,7 @@ const testRoutes = require('./api/routes/tests')
 const reportRoutes = require('./api/routes/reports')
 const performanceRoutes = require('./api/routes/performances')
 const todayclassRoutes = require('./api/routes/todayclasses')
+const bannerRoutes = require('./api/routes/banners')
 
 
 mongoose.connect('mongodb+srv://node_project:'+ process.env.MONGO_ATLAS_PW +'@cluster0.6tknt.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true } );
@@ -60,7 +61,7 @@ app.use('/test', testRoutes);
 app.use('/report', reportRoutes);
 app.use('/performance', performanceRoutes);
 app.use('/todayclass', todayclassRoutes);
-
+app.use('/banner', bannerRoutes);
 
 app.use((req, res, next) => {
   const error = new Error('NOT FOUND');

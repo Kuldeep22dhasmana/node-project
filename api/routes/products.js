@@ -110,4 +110,19 @@ router.get('/:productID', ( req, res, next) => {
     });
 });
 
+router.put('/:productID', ( req, res, next) => {
+    const id = req.params.productID;
+    const product = Product.updateOne({_id:id},{ $set : {name: req.body.name, price: req.body.price, productImage: req.file.path  }})
+    .exec()
+    .then(doc => {
+        console.log("FROM DATABASE",doc);
+        res.status(200).json(doc);
+    })
+    .catch(err => {
+          console.log(err); 
+         res.status(500).json({error: err});
+    });
+  });
+
+
 module.exports = router;
