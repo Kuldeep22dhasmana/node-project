@@ -2,8 +2,8 @@
  const router = express.Router();
  const mongoose = require('mongoose');
  const multer = require('multer');
-
-const storage = multer.diskStorage({
+ const  checkAuth = require('../middleware/check-auth');
+ const storage = multer.diskStorage({
     destination: function(req, file, cb) {
     cb(null, './uploads/');
     },
@@ -46,7 +46,7 @@ router.get('/', (req, res, next) => {
          res.status(500).json({error: err});
     });
 });
-router.post('/', upload.single('productImage'), (req, res, next) => {
+router.post('/',  checkAuth , upload.single('productImage') , (req, res, next) => {
     const product = new Product({
 
         _id: new mongoose.Types.ObjectId(),
@@ -88,14 +88,14 @@ router.get('/:productID', ( req, res, next) => {
          res.status(500).json({error: err});
     });
 });
- router.patch('/:productID', (req, res, next) => {
+ router.patch('/:productID', checkAuth , (req, res, next) => {
       res.status(200).json ({
            message: 'UPDATED PRODUCT'
       });
  });
 
  
- router.delete('/:productID', (req, res, next) => {
+ router.delete('/:productID', checkAuth , (req, res, next) => {
     const id = req.params.productID;
     Product.findById(id)
     .exec()
@@ -110,7 +110,7 @@ router.get('/:productID', ( req, res, next) => {
     });
 });
 
-router.put('/:productID', ( req, res, next) => {
+router.put('/:productID', checkAuth , ( req, res, next) => {
     const id = req.params.productID;
     const product = Product.updateOne({_id:id},{ $set : {name: req.body.name, price: req.body.price, productImage: req.file.path  }})
     .exec()

@@ -2,28 +2,29 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-
-
 const User = require('../models/user');
-const user = require("../models/user");
-const { json } = require("body-parser");
-
+const jwt = require('jsonwebtoken');
+const { token } = require("morgan");
 
 router.post("/signup", (req, res, next) => {
  User.find({email: req.body.email})
  .exec()
  .then(user => {
      if(user.length >= 1) {
+        console.log("entered length");
         return res.status(409).json ({
            message: 'Mail Exists'
         });
      } else {
+        console.log("entered else");
+        console.log(req.body.password)
       bcrypt.hash(req.body.password, 10, (err, hash) => {
          if (err) {
          return res.status(500).json({
          errror: err
           });
        } else {
+          console.log("password hash");
          const user = new User ({
          _id: new mongoose.Types.ObjectId(),
          email: req.body.email,
@@ -33,6 +34,7 @@ router.post("/signup", (req, res, next) => {
                .save()
                .then(result => {
                console.log(result);
+               console.log("user created");
                res.status(201).json ({
                message: "User Created"
                });
@@ -50,11 +52,11 @@ router.post("/signup", (req, res, next) => {
 });
 
 router.post("/login", (req, res, next) => {
-   User.find({ email: req.body,email })
+   User.find({ email: req.body.email })
     .exec()
     .then( user => {
     if (user.length < 1) {
-       return res.status(404).json({
+       return res.status(401).json({
           message: 'Auth Failed'
          });
      }
@@ -65,8 +67,19 @@ router.post("/login", (req, res, next) => {
             });
          }
          if (result)  {
-            return res.status(200),json({
-               message: 'AUTH SUCCESSFUL'
+            const token = jwt.sign(
+            {
+               email: user[0].email,
+               userID: user[0]._id
+            },
+            process.env.JWT_KEY,
+            {
+             expiresIn: "1h"
+             }
+            );
+            return res.status(200).json({
+               message: 'AUTH SUCCESSFUL',
+               token : token
             });
          }
          res.status(401).json({

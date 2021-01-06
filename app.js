@@ -30,7 +30,6 @@ const performanceRoutes = require('./api/routes/performances')
 const todayclassRoutes = require('./api/routes/todayclasses')
 const bannerRoutes = require('./api/routes/banners')
 
-
 mongoose.connect('mongodb+srv://node_project:'+ process.env.MONGO_ATLAS_PW +'@cluster0.6tknt.mongodb.net/<dbname>?retryWrites=true&w=majority', { useNewUrlParser: true } );
 
 app.use(morgan('dev')); 
