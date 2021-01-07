@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 
     _id: mongoose.Schema.Types.ObjectId,
 
-    img1: String,
-    img2: String
+    img: String,
+    role: String,
+    bid: String,
+    status: String
  })
 
  module.exports = mongoose.model('Banner', bannerSchema);

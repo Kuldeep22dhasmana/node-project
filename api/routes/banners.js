@@ -19,8 +19,10 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
     const banner = new Banner ({
         _id: new mongoose.Types.ObjectId,
-        img1: req.body.img1,
-        img2: req.body.img2
+        status: req.body.status,
+        img: req.body.img,
+        role: req.body.role,
+        bid: req.body.bid
     });
      banner
     
@@ -71,7 +73,7 @@ router.delete('/:bannerID', (req, res, next) => {
 
 router.put('/:bannerID', ( req, res, next) => {
     const id = req.params.bannerID;
-    const banner = Banner.updateOne({_id:id},{ $set : {img1:req.body.img1 , img2:req.body.img2} })
+    const banner = Banner.updateOne({_id:id},{ $set : {img:req.body.img , status:req.body.status , role: req.body.role , bid: req.body.bid} })
     .exec()
     .then(doc => {
         console.log("FROM DATABASE",doc);
