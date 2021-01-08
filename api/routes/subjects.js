@@ -20,8 +20,8 @@ router.post('/', (req, res, next) => {
     const subject = new Subject({
         _id: new mongoose.Types.ObjectId(),
         subjectname: req.body.subjectname,
-        subjectcode: req.body.subjectcode,
-        unitid: req.body.unitid
+        subjectcode: req.body.subjectcode
+        
 
     });
     subject
@@ -76,7 +76,7 @@ router.get('/:subjectID', ( req, res, next) => {
 
     router.put('/:subjectID', ( req, res, next) => {
   const id = req.params.subjectID;
-  const subject = Subject.updateOne({_id:id},{ $set : {subjectname:req.body.subjectname , subjectcode: req.body.subjectcode , unitid: req.body.unitid }})
+  const subject = Subject.updateOne({_id:id},{ $set : {subjectname:req.body.subjectname , subjectcode: req.body.subjectcode  }})
   .exec()
   .then(doc => {
       console.log("FROM DATABASE",doc);
