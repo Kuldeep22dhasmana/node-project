@@ -4,8 +4,9 @@ const assignmentSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     noofquestion: String,
     teacherid: String,
-    marks: String,
-    name: String
+    name: String,
+    startingdate: String,
+    endingdate: String
 });
 
 module.exports = mongoose.model('Assigment', assignmentSchema);

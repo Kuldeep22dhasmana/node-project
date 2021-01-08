@@ -22,7 +22,8 @@ router.post('/', (req, res, next) => {
 
 const assignment = new Assignment({
      _id: new mongoose.Types.ObjectId(),
-     marks: req.body.marks,
+     startingdate: req.body.startingdate,
+     endingdate: req.body.endingdate,
      teacherid: req.body.teacherid,
      name: req.body.name,
      noofquestion : req.body.noofquestion
