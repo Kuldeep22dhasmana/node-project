@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const testSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    subjectid: String,
+    testname: String,
     teacherid: String,
     time: String,
     obtainedmarks: String,
-    marks: String
+    totalmarks: String
 });
 
 module.exports = mongoose.model('Test', testSchema);
