@@ -26,7 +26,8 @@ const library = new Library({
     bookid: req.body.bookid,
     dateofissuse: req.body.dateofissue,
     dateofsubmission: req.body.dateofsubmission,
-    numberofbook: req.body.numberofbook
+    numberofbook: req.body.numberofbook,
+    studentname: req.body.studentname
 
  });
   library
